@@ -1,0 +1,344 @@
+body {
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+}
+
+/* From Uiverse.io by Na3ar-17 */
+.card {
+  width: 300px;
+  border: 2px solid #dfdfdf;
+  border-radius: 20px;
+  padding-bottom: 10px;
+  position: relative;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  max-height: 400px;
+  overflow: hidden;
+  background-color: #fff;
+
+  &:has(.header .close .toggle-checkbox:checked) {
+    max-height: 66px;
+    padding: 0;
+
+    .header {
+      .close {
+        opacity: 0;
+      }
+    }
+
+    .add-cash-button {
+      transform: translate(155%, -875%);
+      z-index: 20;
+    }
+  }
+
+  &:has(.header .close .toggle-checkbox:not(:checked)) {
+    .content {
+      .header {
+        animation: fadeSlideIn 0.35s ease-out forwards;
+        animation-delay: 0.05s;
+      }
+
+      .bank-cards {
+        animation: fadeSlideIn 0.35s ease-out forwards;
+        animation-delay: 0.15s;
+      }
+
+      .footer {
+        animation: fadeSlideIn 0.35s ease-out forwards;
+        animation-delay: 0.25s;
+      }
+    }
+  }
+
+  & > .header {
+    border-bottom: 2px solid #dfdfdf;
+    transition: border-color 0.3s ease;
+
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+
+      .wallet {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .icon-wrapper {
+          padding: 10px;
+          border-radius: 15px;
+          background-color: #f0f0f0;
+          display: grid;
+          place-items: center;
+        }
+      }
+
+      .text {
+        .title,
+        .balance {
+          margin: 2px 0;
+        }
+
+        .title {
+          font-weight: semi-bold;
+          color: #8e8e8e;
+        }
+
+        .balance {
+          font-size: 20px;
+          font-weight: bold;
+        }
+      }
+
+      .close {
+        border: 2px solid #f0f0f0;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+
+        .toggle-checkbox {
+          pointer-events: none;
+          width: 100%;
+          height: 100%;
+          display: none;
+          z-index: 100;
+        }
+
+        .close-icon {
+          width: 20px;
+          aspect-ratio: 1;
+          color: #8e8e8e;
+        }
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 0px 15px 48px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      padding: 10px 0px;
+
+      .title {
+        font-weight: bold;
+        font-size: 17px;
+      }
+
+      .add-card-button {
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: 2px solid #f0f0f0;
+        border-radius: 15px;
+        color: #8e8e8e;
+        font-weight: semi-bold;
+        transition: background-color 0.2s ease-in-out;
+        padding: 2px 5px;
+
+        .add-card-icon {
+          width: 18px;
+          aspect-ratio: 1;
+          color: #8e8e8e;
+        }
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+
+    .bank-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      opacity: 0;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        height: calc((100% - 10px) / 2);
+        border-radius: 6px;
+        outline: 2.5px solid #333;
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      &:has(.input[type="radio"]:checked)::before {
+        opacity: 1;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s ease-in-out;
+      }
+
+      &:has(.bank-card:nth-child(1) .input[type="radio"]:checked)::before {
+        transform: translateY(0);
+      }
+
+      &:has(.bank-card:nth-child(2) .input[type="radio"]:checked)::before {
+        transform: translateY(calc(100% + 10px));
+      }
+
+      .bank-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 6px;
+        padding: 5px 6px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+
+        .number {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .input[type="radio"] {
+            display: none;
+          }
+
+          .custom-radio {
+            display: inline-block;
+            width: 16px;
+            aspect-ratio: 1;
+            border: 2px solid #333;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+          }
+
+          .custom-radio::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 8px;
+            aspect-ratio: 1;
+            background-color: #333;
+            border-radius: 2px;
+            transition: transform 0.2s ease-in-out;
+          }
+
+          .input[type="radio"]:checked + .custom-radio::after {
+            transform: translate(-50%, -50%) scale(1);
+          }
+
+          .card-number {
+            margin: 0;
+            font-weight: bold;
+          }
+        }
+
+        .type {
+          margin: 0;
+          font-weight: bold;
+          font-size: 14px;
+        }
+
+        &:hover {
+          background-color: #efefef;
+        }
+      }
+    }
+
+    .footer {
+      margin-top: 15px;
+      opacity: 0;
+
+      .cash {
+        .cash-title {
+          margin: 0;
+          font-weight: bold;
+          color: #8e8e8e;
+        }
+
+        .blocks {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          margin-top: 5px;
+          text-align: center;
+          color: #3d3d3d;
+          font-weight: semi-bold;
+
+          .block {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 2px solid #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out,
+              transform 0.2s ease-in-out;
+
+            &:hover {
+              background-color: #f0f0f0;
+              transform: translateY(-2px);
+            }
+          }
+        }
+      }
+    }
+  }
+  .add-cash-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 20px;
+    transform: translate(15%, -100%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    .add-card-button-icon {
+      width: 18px;
+      aspect-ratio: 1;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+      .add-card-button-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
